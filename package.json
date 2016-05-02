@@ -10,7 +10,7 @@
     "bluebird": "latest",
     "body-parser": "1.5.0",
     "ejs": "latest",
-    "express": "~3.x",
+    "express": "~4.13.4",
     "formidable": "~1.0.15"
   },
   "scripts": {
