@@ -3,17 +3,17 @@ var app = angular.module('ritoApp', ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
     .when('/', {
-        templateUrl: 'templates/setup.html',
+        templateUrl: 'views/setup.html',
         controller: 'setupController'
     })
     .when('/game', {
-      templateUrl: 'templates/game.html',
+      templateUrl: 'game.html',
       controller: 'gameController'
     })
     .when('/gameOver', {
-      templateUrl: 'templates/gameOver.html',
+      templateUrl: 'gameOver.html',
       controller: 'endGameController'
-    })
+    });
 });
 
 app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
@@ -39,34 +39,34 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
         ]
       });
     });
-  }
+  };
 
   var setChampions = function(champs) {
     champions = champs;
-  }
+  };
 
   return {
     checkSummoner: checkSummoner,
     setChampions: setChampions
-  }
+  };
 
 }]);
 
 app.controller('setupController', ['$scope', '$q', '$location', '$http', 'masteryFactory', function($scope, $q, $location, $http, masteryFactory) {
   $scope.start = function() {
     $location.path('/game');
-  }
+  };
 
   $scope.check = function() {
     masteryFactory.checkSummoner($scope.summoner).then(function(data) {
-      if (data.champions.length = 3) {
+      if (data.champions.length === 3) {
         $scope.ready = true;
         masteryFactory.setChampions(data);
       } else {
         // err, not enougn champs, or just random?
       }
     });
-  }
+  };
 
 }]);
 
@@ -177,7 +177,7 @@ app.controller('gameController', ['$scope', '$q', '$location', function($scope, 
     var click = {
       x: e.x - ((window.innerWidth/2) - 175) + 5,
       y: e.y - 20
-    }
+    };
     opts.clicks++;
 
     for (var i = 0; i < opts.numCoins; i++) {
@@ -212,7 +212,7 @@ app.controller('gameController', ['$scope', '$q', '$location', function($scope, 
 
   $scope.runPause = function() {
     $scope.runAnimation = !$scope.runAnimation;
-  }
+  };
 
 }]);
 
@@ -220,10 +220,10 @@ app.controller('endGameController', ['$scope', '$q', '$location', function($scop
 
   $scope.playAgain = function() {
     $location.path('/game');
-  }
+  };
 
   $scope.restart = function() {
     $location.path('/');
-  }
+  };
 
 }]);

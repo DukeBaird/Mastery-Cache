@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/DukeBaird/ritoplz/issues"
   },
-  "main": "main.js",
+  "main": "lib/server.js",
   "author": "Ben Craig",
   "license": "BSD-2-Clause",
   "devDependencies": {

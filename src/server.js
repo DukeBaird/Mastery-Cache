@@ -7,6 +7,10 @@ import fs from 'fs';
 const app = express();
 
 app.set('port', (process.env.PORT || 8080));
+
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
 app.use(express.static(__dirname + '/../public'));
 app.use(bodyParser.json());
 
