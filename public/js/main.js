@@ -3,15 +3,15 @@ var app = angular.module('ritoApp', ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
     .when('/', {
-        templateUrl: 'views/setup.html',
+        templateUrl: 'setup',
         controller: 'setupController'
     })
     .when('/game', {
-      templateUrl: 'game.html',
+      templateUrl: 'game',
       controller: 'gameController'
     })
     .when('/gameOver', {
-      templateUrl: 'gameOver.html',
+      templateUrl: 'gameOver',
       controller: 'endGameController'
     });
 });

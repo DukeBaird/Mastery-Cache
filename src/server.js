@@ -23,6 +23,15 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.render('index');
 });
+app.get('/setup', (req, res) => {
+    res.render('setup');
+});
+app.get('/game', (req, res) => {
+    res.render('game');
+});
+app.get('/gameOver', (req, res) => {
+    res.render('gameOver');
+});
 
 app.listen(app.get('port'), () => {
     console.log('Server running on localhost:' + app.get('port') + '/');
