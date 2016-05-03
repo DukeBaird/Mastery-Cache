@@ -21,23 +21,28 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
   var champions = [];
 
   var checkSummoner = function(name) {
+
+    var region = 'na';
+
     return $q(function(resolve, reject) {
-      // $http.get(url, {
-      //   headers: {
-      //       token: token
-      //   }
-      // }).then(function(data) {
-      //   resolve(data);
-      // }, function(err) {
-      //   reject(err);
-      // });
-      resolve({
-        champions: [
-          'Caitlyn',
-          'Zac',
-          'Brand'
-        ]
+      $http.get('/api/v1/topMastery', {
+        headers: {},
+        params: {
+          summoner: name,
+          region: region
+        }
+      }).then(function(data) {
+        resolve(data);
+      }, function(err) {
+        reject(err);
       });
+      // resolve({
+      //   champions: [
+      //     'Caitlyn',
+      //     'Zac',
+      //     'Brand'
+      //   ]
+      // });
     });
   };
 
@@ -59,12 +64,13 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
 
   $scope.check = function() {
     masteryFactory.checkSummoner($scope.summoner).then(function(data) {
-      if (data.champions.length === 3) {
-        $scope.ready = true;
-        masteryFactory.setChampions(data);
-      } else {
-        // err, not enougn champs, or just random?
-      }
+      console.log(data);
+    //   if (data.champions.length === 3) {
+    //     $scope.ready = true;
+    //     masteryFactory.setChampions(data);
+    //   } else {
+    //     // err, not enougn champs, or just random?
+    //   }
     });
   };
 
