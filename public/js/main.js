@@ -32,7 +32,7 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
           region: region
         }
       }).then(function(data) {
-        resolve(data);
+        resolve(data.data);
       }, function(err) {
         reject(err);
       });
@@ -50,9 +50,14 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
     champions = champs;
   };
 
+  var getChampions = function() {
+    return champions;
+  };
+
   return {
     checkSummoner: checkSummoner,
-    setChampions: setChampions
+    setChampions: setChampions,
+    getChampions: getChampions
   };
 
 }]);
@@ -65,18 +70,21 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
   $scope.check = function() {
     masteryFactory.checkSummoner($scope.summoner).then(function(data) {
       console.log(data);
-    //   if (data.champions.length === 3) {
-    //     $scope.ready = true;
-    //     masteryFactory.setChampions(data);
-    //   } else {
-    //     // err, not enougn champs, or just random?
-    //   }
+      if (data.champions.length === 3) {
+        $scope.ready = true;
+        masteryFactory.setChampions(data);
+      } else {
+        // err, not enougn champs, or just random?
+      }
     });
   };
 
 }]);
 
-app.controller('gameController', ['$scope', '$q', '$location', function($scope, $q, $location) {
+app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
+
+  var champions = masteryFactory.getChampions().champions;
+  console.log(champions);
 
   var c = document.getElementById('canvas');
 
@@ -121,26 +129,19 @@ app.controller('gameController', ['$scope', '$q', '$location', function($scope, 
       
       for (var i = 0; i < opts.numCoins; i++) {
         var coin = coins[i];
-        
+        var drawing = new Image();
         if (coin.type < 11) {
-          var drawing = new Image();
-          drawing.src = '/images/Caitlyn_old.png';
+          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[0].key + '.png';
           ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
         } else if (coin.type < 31) {
-          ctx.strokeStyle = 'red';
-          ctx.beginPath();
-          ctx.rect(coin.x, coin.y, 20, 20);
-          ctx.stroke();
+          drawing.src = '/images/Baron_Square.jpg';
+          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
         } else if (coin.type < 61) {
-          ctx.strokeStyle = 'blue';
-          ctx.beginPath();
-          ctx.rect(coin.x, coin.y, 20, 20);
-          ctx.stroke();
+          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[1].key + '.png';
+          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
         } else {
-          ctx.strokeStyle = 'green';
-          ctx.beginPath();
-          ctx.rect(coin.x, coin.y, 20, 20);
-          ctx.stroke();  
+          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[2].key + '.png';
+          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
         }
 
         coin.y += coin.speed;
