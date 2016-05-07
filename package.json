@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "postinstall": "babel src -d lib"
+    "postinstall": "babel src -d lib",
+    "start": "node lib/server.js"
   },
   "bugs": {
     "url": "https://github.com/DukeBaird/ritoplz/issues"
