@@ -15,7 +15,8 @@
     "request": "^2.60.0"
   },
   "scripts": {
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "postinstall": "babel src -d lib"
   },
   "bugs": {
     "url": "https://github.com/DukeBaird/ritoplz/issues"
