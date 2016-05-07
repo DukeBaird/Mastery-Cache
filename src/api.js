@@ -9,9 +9,9 @@ let router = express.Router();
 
 function checkSummoner(req, res, next) {
 	const summonerName = req.query.summoner;
-	const region = req.query.region || 'na';
+	const region = req.query.region;
 
-	request.getAsync('https://na.api.pvp.net//api/lol/' + region + '/v1.4/summoner/by-name/' + 
+	request.getAsync('https://' + region + '.api.pvp.net//api/lol/' + region + '/v1.4/summoner/by-name/' + 
 		summonerName + '?api_key=' + process.env.LOLAPPKEY)
 		.then((response) => {
 
@@ -25,11 +25,10 @@ function checkSummoner(req, res, next) {
             }
             const summonerId = parsedBody[Object.keys(parsedBody)[0]].id;
 
-            request.getAsync('https://na.api.pvp.net/championmastery/location/' + region + '1/player/' + 
+            request.getAsync('https://' + region + '.api.pvp.net/championmastery/location/' + region + '1/player/' + 
             	summonerId + '/topchampions?count=3&api_key=' + process.env.LOLAPPKEY)
             	.then((response) => {
             		const parsedBody = JSON.parse(response.body);
-
             		const champs  = [
             			{
             				id: 0,

@@ -2,4 +2,11 @@
 	<button type="button" class='startButton' ng-click='start()' ng-show='ready'>START</button>
 	<button type="button" class='checkButton' ng-click='check()' ng-hide='ready'>CHECK SUMMONER</button>
 	<input type='text' class='summonerInput' placeholder="SUMMONER NAME" ng-model='summoner'></input>
+	<select class='regionInput' ng-model='region'>
+		<option value='na'>NA</option>
+		<option value='euw'>EUW</option>
+		<option value='eune'>EUNE</option>
+		<option value='kr'>KR</option>
+	</select>
+	<div class='err' ng-show='err'>{{errMsg}}</div>
 </div>

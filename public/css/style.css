@@ -48,6 +48,13 @@ canvas {
   border-radius: 2px;
 }
 
+.err {
+  position: absolute;
+  top: 370px;
+  width: 100%;
+  text-align: center;
+}
+
 .summonerInput {
   position: absolute;
   top: 270px;
@@ -58,9 +65,40 @@ canvas {
   border: none;
 }
 
+.regionInput {
+  position: absolute;
+  top: 245px;
+  width: 80px;
+  left: calc(50% - 40px);
+}
+
 .runButton {
   position: absolute;
   right: 0;
   top: 0;
   width: 50px;
+}
+
+.tweetbutton {
+  inherit: none;
+  height: 16px;
+  display: inline-block;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #cccccc;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  background-color: lightblue;
+
+  font-weight: bold;
+  font-size: 0.7em;
+  font-family: Arial;
+  
+  color: #333333;
+  text-decoration: none;
+}
+.tweetbutton:hover {
+  background-color: cyan;
 }

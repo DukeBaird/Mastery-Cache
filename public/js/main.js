@@ -19,10 +19,8 @@ app.config(function($routeProvider) {
 app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
 
   var champions = [];
-
-  var checkSummoner = function(name) {
-
-    var region = 'na';
+  var score = 0;
+  var checkSummoner = function(name, region) {
 
     return $q(function(resolve, reject) {
       $http.get('/api/v1/topMastery', {
@@ -36,13 +34,6 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
       }, function(err) {
         reject(err);
       });
-      // resolve({
-      //   champions: [
-      //     'Caitlyn',
-      //     'Zac',
-      //     'Brand'
-      //   ]
-      // });
     });
   };
 
@@ -50,31 +41,50 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
     champions = champs;
   };
 
+  var setScore = function(scoreobj) {
+    score = scoreobj;
+  };
+
   var getChampions = function() {
     return champions;
+  };
+
+  var getScore = function() {
+    return score;
   };
 
   return {
     checkSummoner: checkSummoner,
     setChampions: setChampions,
-    getChampions: getChampions
+    setScore: setScore,
+    getChampions: getChampions,
+    getScore: getScore
   };
 
 }]);
 
 app.controller('setupController', ['$scope', '$q', '$location', '$http', 'masteryFactory', function($scope, $q, $location, $http, masteryFactory) {
+  
+  $scope.region = 'na';
+
   $scope.start = function() {
     $location.path('/game');
   };
 
   $scope.check = function() {
-    masteryFactory.checkSummoner($scope.summoner).then(function(data) {
-      console.log(data);
+    $scope.err = false;
+    masteryFactory.checkSummoner($scope.summoner, $scope.region ).then(function(data) {
       if (data.champions.length === 3) {
         $scope.ready = true;
         masteryFactory.setChampions(data);
       } else {
-        // err, not enougn champs, or just random?
+        $scope.err = true;
+        $scope.errMsg = "Minimum requirements not met";
+      }
+    }).catch(function(err) {
+      if (err.status === 404) {
+        $scope.err = true;
+        $scope.errMsg = "Summoner not found";
       }
     });
   };
@@ -84,7 +94,14 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
 app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
 
   var champions = masteryFactory.getChampions().champions;
-  console.log(champions);
+
+  $scope.champions = champions;
+  $scope.time = 60;
+
+  setInterval(function() {
+    $scope.time--;
+    $scope.$apply();
+  }, 1000);
 
   var c = document.getElementById('canvas');
 
@@ -92,17 +109,24 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
   var height = c.height = 500;
   var ctx = c.getContext('2d');
 
-  $scope.runAnimation = true;
-
-  var score = {
+  $scope.score = {
     points: 0,
-    mastery1: 0,
-    mastery2: 0,
-    mastery3: 0,
-    lives: 3
+    mastery1: {
+      level: 1,
+      tokens: 0,
+      needed: 5
+    },
+    mastery2: {
+      level: 1,
+      tokens: 0,
+      needed: 5
+    },
+    mastery3: {
+      level: 1,
+      tokens: 0,
+      needed: 5
+    }
   };
-
-  $scope.score = score.points;
   $scope.lives = score.lives;
 
   var opts = {
@@ -123,45 +147,43 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
   }
 
   function loop() {
-    if ($scope.runAnimation) {
+    ctx.fillStyle = "#333333";
+    ctx.fillRect(0, 0, width, height);
+    
+    for (var i = 0; i < opts.numCoins; i++) {
+      var coin = coins[i];
+      var drawing = new Image();
+      if (coin.type < 11) {
+        drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[0].key + '.png';
+        ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
+      } else if (coin.type < 31) {
+        drawing.src = '/images/Baron_Square.jpg';
+        ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
+      } else if (coin.type < 61) {
+        drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[1].key + '.png';
+        ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
+      } else {
+        drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[2].key + '.png';
+        ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
+      }
+
+      coin.y += coin.speed;
+      
+      if (coin.y > 500) {
+        coins.splice(i, 1);
+        opts.numCoins--;
+        i--;
+        addNew();
+      }
+    }
+
+    if ($scope.time < 0) {
       ctx.fillStyle = "#333333";
       ctx.fillRect(0, 0, width, height);
-      
-      for (var i = 0; i < opts.numCoins; i++) {
-        var coin = coins[i];
-        var drawing = new Image();
-        if (coin.type < 11) {
-          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[0].key + '.png';
-          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
-        } else if (coin.type < 31) {
-          drawing.src = '/images/Baron_Square.jpg';
-          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
-        } else if (coin.type < 61) {
-          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[1].key + '.png';
-          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
-        } else {
-          drawing.src = 'http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/' + champions[2].key + '.png';
-          ctx.drawImage(drawing, coin.x, coin.y, 20, 20);
-        }
-
-        coin.y += coin.speed;
-        
-        if (coin.y > 500) {
-          coins.splice(i, 1);
-          opts.numCoins--;
-          i--;
-          addNew();
-        }
-      }
-      
-      if(score.lives <= 0) {
-        ctx.fillStyle = "#333333";
-        ctx.fillRect(0, 0, width, height);
-        console.log(score);
-        $location.path('/gameOver').replace();
-        $scope.$apply();
-        return;
-      }
+      masteryFactory.setScore($scope.score);
+      $location.path('/gameOver').replace();
+      $scope.$apply();
+      return;
     }
 
     window.requestAnimationFrame(loop);
@@ -180,7 +202,6 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
   init();
 
   c.addEventListener("mousedown", function(e) {
-    if (!$scope.runAnimation) return;
     var click = {
       x: e.x - ((window.innerWidth/2) - 175) + 5,
       y: e.y - 20
@@ -195,20 +216,33 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
         i--;
         
         if (coin.type < 11) {
-          score.mastery1++;
-          score.points += 50;
+          $scope.score.mastery1.tokens++;
+          $scope.score.points += 50 * $scope.score.mastery1.level;
+          if ($scope.score.mastery1.tokens >= $scope.score.mastery1.needed && $scope.score.mastery1.level < 5) {
+            $scope.score.mastery1.level++;
+            $scope.score.mastery1.tokens = 0;
+            $scope.score.mastery1.needed += 5;
+          }
         } else if (coin.type < 31) {
-          score.lives--;
+          $scope.score.points -= 100;
         } else if (coin.type < 61) {
-          score.mastery2++;
-          score.points += 30;
+          $scope.score.mastery2.tokens++;
+          $scope.score.points += 30 * $scope.score.mastery2.level;
+          if ($scope.score.mastery2.tokens >= $scope.score.mastery2.needed && $scope.score.mastery2.level < 5) {
+            $scope.score.mastery2.level++;
+            $scope.score.mastery2.tokens = 0;
+            $scope.score.mastery2.needed += 5;
+          }
         } else {
-          score.mastery3++;
-          score.points += 10;
+          $scope.score.mastery3.tokens++;
+          $scope.score.points += 10 * $scope.score.mastery3.level;
+          if ($scope.score.mastery3.tokens >= $scope.score.mastery3.needed && $scope.score.mastery3.level< 5) {
+            $scope.score.mastery3.level++;
+            $scope.score.mastery3.tokens = 0;
+            $scope.score.mastery3.needed += 5;
+          }
         }
         
-        $scope.score = score.points;
-        $scope.lives = score.lives;
         $scope.$apply();
 
         addNew();
@@ -217,13 +251,13 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
     
   });
 
-  $scope.runPause = function() {
-    $scope.runAnimation = !$scope.runAnimation;
-  };
-
 }]);
 
-app.controller('endGameController', ['$scope', '$q', '$location', function($scope, $q, $location) {
+app.controller('endGameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
+
+  var score = masteryFactory.getScore();
+  $scope.score = score;
+  // console.log(score);
 
   $scope.playAgain = function() {
     $location.path('/game');
