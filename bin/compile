@@ -1,4 +1,0 @@
-#!/bin/sh
-
-npm run-script build
-exit 0
