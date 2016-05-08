@@ -124,7 +124,6 @@ canvas {
   position: absolute;
   bottom: 20px;
   left: 20px;
-
   height: 16px;
   display: inline-block;
   border-radius: 3px;
@@ -135,11 +134,9 @@ canvas {
   padding-right: 4px;
   padding-top: 2px;
   background-color: #55ACEE;
-
   font-weight: bold;
   font-size: 0.7em;
-  font-family: Arial;
-  
+  font-family: Arial;  
   color: #333333;
   text-decoration: none;
 }
@@ -151,10 +148,23 @@ canvas {
   position: absolute;
   bottom: 20px;
   right: 20px;
-
+  height: 20px;
+  display: inline-block;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #3b5998;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  background-color: #3b5998;
   font-weight: bold;
   font-size: 0.7em;
   font-family: Arial;
+  color: white;
+}
+.fbButton:hover {
+  border-color: black
 }
 
 .finalScore {
@@ -170,6 +180,12 @@ canvas {
   top: 150px;
   width: 80px;
   left: calc(50% - 40px);
+}
+
+.button {
+  height: 50px;
+  font-weight: bold;
+  border-radius: 2px;
 }
 
 .legal {
