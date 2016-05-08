@@ -1,8 +1,21 @@
 <div class='setup'>
-	Final Score: {{score.points}}
-	<a class="tweetbutton" target="_blank" href="https://twitter.com/intent/tweet?text=I just scored {{score.points}} points in Mastery Cache! 	https://goo.gl/4Mqt3G ">
+	<div class='finalScore'>
+		Final Score<br>
+		{{score.points}}
+	</div>
+	
+	<a class="tweetbutton" target="_blank" href="https://twitter.com/intent/tweet?text=I just scored {{score.points}} points in Mastery Cache! 	goo.gl/4Mqt3G">
 		Share on Twitter!
 	</a>
-	<button type="button" ng-click='playAgain()'>Play Again</button>
-	<button type="button" ng-click='restart()'>Choose another summoner</button>
+
+	<button class='fbButton' ng-click='share()'>
+		Share on Facebook!
+	</button>
+
+	<div class='buttons'>
+		<button type="button" ng-click='playAgain()'>Play Again</button><br>
+		<br>
+		<button type="button" ng-click='restart()'>Choose another summoner</button>
+	</div>
+	
 </div>

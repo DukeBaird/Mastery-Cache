@@ -66,6 +66,7 @@ app.factory('masteryFactory', ['$http', '$q', function($http, $q) {
 app.controller('setupController', ['$scope', '$q', '$location', '$http', 'masteryFactory', function($scope, $q, $location, $http, masteryFactory) {
   
   $scope.region = 'na';
+  $scope.instructions = false;
 
   $scope.start = function() {
     $location.path('/game');
@@ -255,9 +256,17 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
 
 app.controller('endGameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
 
+  
+
   var score = masteryFactory.getScore();
   $scope.score = score;
-  // console.log(score);
+
+  $scope.share = function() {
+    FB.ui({
+      method: 'share',
+      href: 'https://mastery-cache.herokuapp.com/'
+    }, function(response){});
+  };
 
   $scope.playAgain = function() {
     $location.path('/game');

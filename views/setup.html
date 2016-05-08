@@ -1,4 +1,4 @@
-<div class='setup'>
+<div class='setup' ng-show='!instructions'>
 	<button type="button" class='startButton' ng-click='start()' ng-show='ready'>START</button>
 	<button type="button" class='checkButton' ng-click='check()' ng-hide='ready'>CHECK SUMMONER</button>
 	<input type='text' class='summonerInput' placeholder="SUMMONER NAME" ng-model='summoner'></input>
@@ -9,4 +9,30 @@
 		<option value='kr'>KR</option>
 	</select>
 	<div class='err' ng-show='err'>{{errMsg}}</div>
+	<button type='button' class='instructions' ng-click='instructions = !instructions'>INSTRUCTIONS</button>
+</div>
+<div class='setup' ng-show='instructions'>
+	<div class='instructionsDiv'>
+		Catch the falling champion icons by clicking on them to level up your champion mastery!<br>
+		<br>
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Lux.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Ryze.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Lulu.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Graves.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Leblanc.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Maokai.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Braum.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Bard.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Azir.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Ekko.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Kindred.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Brand.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Syndra.png">
+		<img class='coin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/Sivir.png">
+		<br>
+		Watch out for Baron Nashor <img class='coin' src="images/Baron_Square.jpg">, because he will eat some of your score.<br>
+		<br>
+		Collect as many points in you can before all 60 seconds run out!
+	</div>
+	<button type='button' class='instructions' ng-click='instructions = !instructions'>CHOOSE SUMMONER</button>
 </div>

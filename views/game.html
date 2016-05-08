@@ -1,9 +1,22 @@
 <canvas id=canvas></canvas>
 <div id='score'>
-  Score: {{score.points}}<br>
-  Time Left: {{time}}<br>
-  {{champions[0].name}} Mastery: {{score.mastery1.level}} <br>
-  {{champions[1].name}} Mastery: {{score.mastery2.level}} <br>
-  {{champions[2].name}} Mastery: {{score.mastery3.level}} <br>
+  <div class='points'>
+	  SCORE: {{score.points}}
+  </div>
+  <div class='time'>
+  	{{time}}
+  </div>
+  <table class='masteryBoard'>
+	  <tr>
+	  	<td><img class='scoreCoin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/{{champions[0].key}}.png"></td>
+	  	<td><img class='scoreCoin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/{{champions[1].key}}.png"></td>
+	  	<td><img class='scoreCoin' src="http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/{{champions[2].key}}.png"></td>
+	  </tr>
+	  <tr>
+	  	<td><img class='scoreCoin' src="images/mastery{{score.mastery1.level}}.png"></td>
+	  	<td><img class='scoreCoin' src="images/mastery{{score.mastery2.level}}.png"></td>
+	  	<td><img class='scoreCoin' src="images/mastery{{score.mastery3.level}}.png"></td>
+	  </tr>
+  </table>
 </div>
 

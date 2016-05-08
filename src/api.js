@@ -15,7 +15,7 @@ function checkSummoner(req, res, next) {
 		summonerName + '?api_key=' + process.env.LOLAPPKEY)
 		.then((response) => {
 
-		    const body = response.body;
+	      const body = response.body;
             const parsedBody = JSON.parse(body);
             if (parsedBody.status && parsedBody.status.status_code === 404) {
             	res.status(404).json({
@@ -77,9 +77,9 @@ function checkSummoner(req, res, next) {
             			champs[2] = champ3;
 
 	            		res.status(200).json({
-							playerId: summonerId,
-							champions: champs
-						});
+						playerId: summonerId,
+						champions: champs
+					});
             		});
 
 

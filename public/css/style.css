@@ -1,5 +1,6 @@
 body {
   background-color: black;
+  font-family: 'Lato', sans-serif;
 }
 
 canvas {
@@ -72,25 +73,68 @@ canvas {
   left: calc(50% - 40px);
 }
 
-.runButton {
+.instructions {
   position: absolute;
-  right: 0;
-  top: 0;
+  top: 450px;
+  width: 150px;
+  left: calc(50% - 75px);
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.instructionsDiv {
+  padding: 15px;
+  font-size: 15px;
+}
+
+.coin {
+  width: 20px;
+  height: 20px;
+}
+
+.points {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+}
+
+.time {
+  position: absolute;
+  top: 275px;
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+}
+
+.masteryBoard {
+  position: absolute;
+  top: 100px;
+  width: 150px;
+  left: calc(50% - 75px);
+}
+
+.scoreCoin {
   width: 50px;
+  height: 50px;
 }
 
 .tweetbutton {
-  inherit: none;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+
   height: 16px;
   display: inline-block;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  border: 1px solid #cccccc;
+  border: 1px solid #55ACEE;
   padding-left: 4px;
   padding-right: 4px;
   padding-top: 2px;
-  background-color: lightblue;
+  background-color: #55ACEE;
 
   font-weight: bold;
   font-size: 0.7em;
@@ -100,5 +144,30 @@ canvas {
   text-decoration: none;
 }
 .tweetbutton:hover {
-  background-color: cyan;
+  border-color: black;
+}
+
+.fbButton {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  font-weight: bold;
+  font-size: 0.7em;
+  font-family: Arial;
+}
+
+.finalScore {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+}
+
+.buttons {
+  position: absolute;
+  top: 150px;
+  width: 80px;
+  left: calc(50% - 40px);
 }
