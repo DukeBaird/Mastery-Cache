@@ -73,9 +73,11 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
   };
 
   $scope.check = function() {
-    $scope.err = 'Checking summoner requirements...';
+    $scope.err = true;
+    $scope.errMsg = 'Checking summoner requirements...';
     masteryFactory.checkSummoner($scope.summoner, $scope.region ).then(function(data) {
       if (data.champions.length === 3) {
+        $scope.errMsg = '';
         $scope.ready = true;
         masteryFactory.setChampions(data);
       } else {
@@ -95,6 +97,11 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
 app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
 
   var champions = masteryFactory.getChampions().champions;
+
+  if (!champions) {
+    $location.path('/');
+    $scope.$apply();
+  }
 
   $scope.champions = champions;
   $scope.time = 60;
@@ -178,7 +185,7 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
       }
     }
 
-    if ($scope.time < 0) {
+    if ($scope.time <= 0) {
       ctx.fillStyle = "#333333";
       ctx.fillRect(0, 0, width, height);
       masteryFactory.setScore($scope.score);
@@ -256,7 +263,12 @@ app.controller('gameController', ['$scope', '$q', '$location', 'masteryFactory',
 
 app.controller('endGameController', ['$scope', '$q', '$location', 'masteryFactory', function($scope, $q, $location, masteryFactory) {
 
-  
+  var champions = masteryFactory.getChampions().champions;
+
+  if (!champions) {
+    $location.path('/');
+    $scope.$apply();
+  }
 
   var score = masteryFactory.getScore();
   $scope.score = score;

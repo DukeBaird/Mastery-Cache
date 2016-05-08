@@ -76,7 +76,7 @@ function checkSummoner(req, res, next) {
             			champs[1] = champ2;
             			champs[2] = champ3;
 
-	            		res.status(200).json({
+	           		res.status(200).json({
 						playerId: summonerId,
 						champions: champs
 					});
