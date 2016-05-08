@@ -73,7 +73,7 @@ app.controller('setupController', ['$scope', '$q', '$location', '$http', 'master
   };
 
   $scope.check = function() {
-    $scope.err = false;
+    $scope.err = 'Checking summoner requirements...';
     masteryFactory.checkSummoner($scope.summoner, $scope.region ).then(function(data) {
       if (data.champions.length === 3) {
         $scope.ready = true;
@@ -263,8 +263,9 @@ app.controller('endGameController', ['$scope', '$q', '$location', 'masteryFactor
 
   $scope.share = function() {
     FB.ui({
-      method: 'share',
-      href: 'https://mastery-cache.herokuapp.com/'
+      method: 'feed',
+      link: 'https://mastery-cache.herokuapp.com/',
+      caption: 'I just scored ' + score + ' points in Mastery Cache!'
     }, function(response){});
   };
 

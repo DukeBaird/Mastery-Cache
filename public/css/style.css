@@ -171,3 +171,7 @@ canvas {
   width: 80px;
   left: calc(50% - 40px);
 }
+
+.legal {
+  font-size: 10px;
+}
