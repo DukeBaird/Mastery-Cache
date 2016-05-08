@@ -21,4 +21,6 @@ Run
 
 ```npm start```
 
-to run a local version of the app. A Riot Games API key is needed to play the game.
+to run a local version of the app. 
+
+A Riot Games API key is needed to play the game.
