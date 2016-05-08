@@ -265,7 +265,7 @@ app.controller('endGameController', ['$scope', '$q', '$location', 'masteryFactor
     FB.ui({
       method: 'feed',
       link: 'https://mastery-cache.herokuapp.com/',
-      caption: 'I just scored ' + score + ' points in Mastery Cache!'
+      caption: 'I just scored ' + score.points + ' points in Mastery Cache!'
     }, function(response){});
   };
 
