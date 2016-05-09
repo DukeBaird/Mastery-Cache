@@ -8,6 +8,7 @@ Developed by Ben Craig for the 2016 Riot Games API Challenge.
 Inspired by some old mario party mini game, because it was cool, and because canvas animations make me really happy.
 
 Thanks to those who have helped and inspired me with canvas animations.
+Also HUGE thanks to Alanna for the design help!
 
 -----
 
