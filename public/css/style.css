@@ -29,6 +29,22 @@ canvas {
   color: white;
 }
 
+.logo {
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 75px);
+  height: 150px;
+  width: 150px;
+}
+
+.postLogo {
+  position: absolute;
+  bottom: 75px;
+  left: calc(50% - 60px);
+  height: 120px;
+  width: 120px
+}
+
 .startButton {
   position: absolute;
   top: 300px;
