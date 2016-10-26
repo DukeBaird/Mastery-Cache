@@ -6,6 +6,7 @@ Mastery Cache isn't endorsed by Riot Games and doesn't reflect the views or opin
 
 Developed by Ben Craig for the 2016 Riot Games API Challenge.
 Inspired by some old mario party mini game, because it was cool, and because canvas animations make me really happy.
+Playable at http://masterycache.bdcraig.ca/
 
 Thanks to those who have helped and inspired me with canvas animations.
 Also HUGE thanks to Alanna for the design help!
